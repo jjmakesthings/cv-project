@@ -1,1 +1,23 @@
+body {
+  font-family: sans-serif;
+}
+h1 {
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 500;
+  font-size: 2.25rem;
+  color: rgb(59, 97, 178);
+  margin: 0.2in 0 0.3in 0;
+}
 
+h2 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  color: rgb(20, 20, 20);
+}
+
+h3 {
+  font-size: 0.7rem;
+  font-weight: 500;
+}
