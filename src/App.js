@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import EditablePage from "./components/EditablePage";
+import EditableView from "./components/EditableView";
 import PrintablePage from "./components/PrintablePage";
 
 class App extends React.Component {
@@ -28,7 +28,7 @@ class App extends React.Component {
     let page = this.state.printable ? (
       <PrintablePage />
     ) : (
-      <EditablePage onPrint={this.print} />
+      <EditableView onPrint={this.print} />
     );
     return (
       <div id="App">
