@@ -2,12 +2,7 @@ import React from "react";
 import "./EditableView.css";
 import PrintablePage from "./PrintablePage";
 import ViewButton from "./ViewButton";
-
-class Form extends React.Component {
-  render() {
-    return <h1>Im a Form</h1>;
-  }
-}
+import Form from "./Form";
 
 class EditableView extends React.Component {
   constructor(props) {
@@ -37,7 +32,11 @@ class EditableView extends React.Component {
           click={this.props.onPrint}
           text="Print"
         />
-        {this.state.preview ? <PrintablePage /> : <Form />}
+        {this.state.preview ? (
+          <PrintablePage data={this.props.data} />
+        ) : (
+          <Form data={this.props.data} onAddData={this.props.onAddData} />
+        )}
       </div>
     );
   }
