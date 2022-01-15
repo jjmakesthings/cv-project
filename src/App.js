@@ -4,27 +4,57 @@ import EditableView from "./components/EditableView";
 import PrintablePage from "./components/PrintablePage";
 
 const startingData = {
-  header: {
-    name: "",
-    phone: "",
-    email: "",
-    town: "",
-    links: [],
+  information: {
+    Name: "",
+    Phone: "",
+    Email: "",
+    Town: "",
+    Links: [],
   },
   education: [
     {
-      degree: "",
-      major: "",
-      school: "",
-      city: "",
-      date: "",
+      Degree: "",
+      Major: "",
+      School: "",
+      City: "",
+      Date: "",
     },
   ],
-  training: [{}],
-  skills: [{}],
-  experience: [{}],
-  projects: [{}],
-  hobbies: [{}],
+  Training: [
+    {
+      Title: "",
+      School: "",
+      Date: "",
+    },
+  ],
+  Skills: [
+    {
+      Category: "",
+      Title: "",
+    },
+  ],
+  Experience: [
+    {
+      Employer: "",
+      Start: "",
+      End: "",
+      City: "",
+      Title: "",
+      Accolades: [],
+    },
+  ],
+  Projects: [
+    {
+      Title: "",
+      Subtitle: "",
+      Summary: "",
+    },
+  ],
+  Hobbies: [
+    {
+      Title: "",
+    },
+  ],
 };
 
 class App extends React.Component {
@@ -36,6 +66,12 @@ class App extends React.Component {
     };
     this.print = this.print.bind(this);
     this.addData = this.addData.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleSubmit(section, data) {
+    const newState = Object.assign({}, this.state);
+    newState.data[section] = data;
+    this.setState(newState);
   }
 
   addData(section) {
@@ -44,7 +80,6 @@ class App extends React.Component {
       JSON.parse(JSON.stringify(startingData[section][0]))
     );
     this.setState(newState);
-    console.log(startingData);
   }
 
   print() {
@@ -67,6 +102,8 @@ class App extends React.Component {
         onPrint={this.print}
         data={this.state.data}
         onAddData={this.addData}
+        handleSubmit={this.handleSubmit}
+        startingData={startingData}
       />
     );
     return (

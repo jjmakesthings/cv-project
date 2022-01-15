@@ -35,7 +35,12 @@ class EditableView extends React.Component {
         {this.state.preview ? (
           <PrintablePage data={this.props.data} />
         ) : (
-          <Form data={this.props.data} onAddData={this.props.onAddData} />
+          <Form
+            data={this.props.data}
+            onAddData={this.props.onAddData}
+            handleSubmit={this.props.handleSubmit}
+            startingData={this.props.startingData}
+          />
         )}
       </div>
     );
