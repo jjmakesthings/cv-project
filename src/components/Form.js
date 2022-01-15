@@ -60,9 +60,8 @@ class FormSection extends React.Component {
         Add Another
       </button>
     ) : null;
-
     return (
-      <div>
+      <div className="form-section">
         <form onSubmit={this.props.handleSubmit}>
           {fields}
           <input type="submit" value="Submit" />
@@ -81,7 +80,6 @@ class Form extends React.Component {
     this.onAddData = this.onAddData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
   handleChange(event, section, index, name) {
     const newState = Object.assign({}, this.state);
     if (typeof index === "number") {
@@ -90,7 +88,6 @@ class Form extends React.Component {
     newState[section][name] = event.target.value;
     this.setState(newState);
   }
-
   onAddData(section) {
     const newState = Object.assign({}, this.state);
     newState[section].push(
@@ -100,7 +97,6 @@ class Form extends React.Component {
     console.log("sub data", this.state);
     console.log("parent data", this.props.data);
   }
-
   handleSubmit(event, section) {
     event.preventDefault();
     console.log("submitting");
@@ -110,25 +106,23 @@ class Form extends React.Component {
       JSON.parse(JSON.stringify(this.state[section]))
     );
   }
-
   render() {
+    let formSections = Object.keys(this.state).map((section) => {
+      return (
+        <FormSection
+          key={section}
+          title={section}
+          data={this.state[section]}
+          onAddData={this.onAddData}
+          handleSubmit={(event) => this.handleSubmit(event, section)}
+          handleChange={this.handleChange}
+        />
+      );
+    });
     return (
       <div>
         <h1>Im a Form</h1>
-        <FormSection
-          title="information"
-          data={this.state.information}
-          onAddData={this.onAddData}
-          handleSubmit={(event) => this.handleSubmit(event, "information")}
-          handleChange={this.handleChange}
-        />
-        <FormSection
-          title="education"
-          data={this.state.education}
-          onAddData={this.onAddData}
-          handleSubmit={(event) => this.handleSubmit(event, "education")}
-          handleChange={this.handleChange}
-        />
+        {formSections}
       </div>
     );
   }
