@@ -9,7 +9,7 @@ const startingData = {
     Phone: "",
     Email: "",
     Town: "",
-    Links: [],
+    Links: [""],
   },
   education: [
     {
@@ -40,7 +40,7 @@ const startingData = {
       End: "",
       City: "",
       Title: "",
-      Accolades: [],
+      Achievments: [""],
     },
   ],
   Projects: [

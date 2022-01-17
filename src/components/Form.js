@@ -4,27 +4,59 @@ import "./Form.css";
 class FormFieldSet extends React.Component {
   render() {
     let fieldSet = Object.keys(this.props.data).map((field) => {
-      return (
-        <label key={field}>
-          {field}
-          <input
-            type="text"
-            name={field}
-            index={this.props.index}
-            value={this.props.data[field]}
-            onChange={(event) =>
-              this.props.handleChange(
-                event,
-                this.props.section,
-                this.props.index,
-                field
-              )
-            }
-          />
-        </label>
-      );
+      if (Array.isArray(this.props.data[field])) {
+        return this.props.data[field].map((item, index) => {
+          return (
+            <label key={index}>
+              {field}
+              <input
+                type="text"
+                name={field}
+                index={index}
+                value={item}
+                onChange={(event) =>
+                  this.props.handleChange(
+                    event,
+                    this.props.section,
+                    this.props.index,
+                    field,
+                    index
+                  )
+                }
+              />
+            </label>
+          );
+        });
+      } else {
+        return (
+          <label key={field}>
+            {field}
+            <input
+              type="text"
+              name={field}
+              index={this.props.index}
+              value={this.props.data[field]}
+              onChange={(event) =>
+                this.props.handleChange(
+                  event,
+                  this.props.section,
+                  this.props.index,
+                  field
+                )
+              }
+            />
+          </label>
+        );
+      }
     });
-    return <div>{fieldSet}</div>;
+    return (
+      <div
+        key={this.props.index}
+        className={`field-set ${this.props.divClass}`}
+      >
+        {fieldSet}
+      </div>
+    );
   }
 }
 
@@ -40,6 +72,7 @@ class FormSection extends React.Component {
             data={object}
             key={index}
             index={index}
+            divClass="multiple-set"
             section={this.props.title}
             handleChange={this.props.handleChange}
           />
@@ -50,6 +83,7 @@ class FormSection extends React.Component {
         <FormFieldSet
           data={this.props.data}
           index="null"
+          divClass="single-set"
           section={this.props.title}
           handleChange={this.props.handleChange}
         />
@@ -62,11 +96,14 @@ class FormSection extends React.Component {
     ) : null;
     return (
       <div className="form-section">
+        <h2>{this.props.title}</h2>
         <form onSubmit={this.props.handleSubmit}>
           {fields}
-          <input type="submit" value="Submit" />
+          <div className="form-buttons">
+            <input type="submit" value="Submit" />
+            {addAnother}
+          </div>
         </form>
-        {addAnother}
       </div>
     );
   }
@@ -80,12 +117,19 @@ class Form extends React.Component {
     this.onAddData = this.onAddData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleChange(event, section, index, name) {
+  handleChange(event, section, index, name, listIndex) {
     const newState = Object.assign({}, this.state);
-    if (typeof index === "number") {
-      newState[section][index][name] = event.target.value;
+    if (listIndex) {
+      if (typeof index === "number") {
+        newState[section][index][name][listIndex] = event.target.value;
+      }
+      newState[section][name][listIndex] = event.target.value;
+    } else {
+      if (typeof index === "number") {
+        newState[section][index][name] = event.target.value;
+      }
+      newState[section][name] = event.target.value;
     }
-    newState[section][name] = event.target.value;
     this.setState(newState);
   }
   onAddData(section) {
