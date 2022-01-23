@@ -4,14 +4,14 @@ import EditableView from "./components/EditableView";
 import PrintablePage from "./components/PrintablePage";
 
 const startingData = {
-  information: {
+  Information: {
     Name: "",
     Phone: "",
     Email: "",
     Town: "",
-    Links: [""],
+    Link: [""],
   },
-  education: [
+  Education: [
     {
       Degree: "",
       Major: "",
@@ -40,7 +40,7 @@ const startingData = {
       End: "",
       City: "",
       Title: "",
-      Achievments: [""],
+      Achievment: [""],
     },
   ],
   Projects: [
