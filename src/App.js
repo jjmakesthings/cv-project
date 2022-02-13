@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import EditableView from "./components/EditableView";
 import PrintablePage from "./components/PrintablePage";
@@ -57,61 +57,48 @@ const startingData = {
   ],
 };
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      printable: false,
-      data: JSON.parse(JSON.stringify(startingData)),
-    };
-    this.print = this.print.bind(this);
-    this.addData = this.addData.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  handleSubmit(section, data) {
-    const newState = Object.assign({}, this.state);
-    newState.data[section] = data;
-    this.setState(newState);
+function App(props) {
+  const [printable, setPrintable] = useState(false);
+  const [data, setData] = useState(JSON.parse(JSON.stringify(startingData)));
+
+  function handleSubmit(section, sectionData) {
+    const newData = Object.assign({}, data);
+    newData[section] = sectionData;
+    setData(newData);
   }
 
-  addData(section) {
-    const newState = Object.assign({}, this.state);
-    newState.data[section].push(
-      JSON.parse(JSON.stringify(startingData[section][0]))
-    );
-    this.setState(newState);
+  function addData(section) {
+    const newData = Object.assign({}, data);
+    newData[section].push(JSON.parse(JSON.stringify(startingData[section][0])));
+    setData(newData);
   }
 
-  print() {
-    this.setState(
-      {
-        printable: true,
-      },
-      () => {
-        window.print();
-        this.setState({ printable: false });
-      }
-    );
+  async function print() {
+    function printPromise() {
+      return new Promise((resolve, reject) => {
+        resolve(setPrintable(true));
+      });
+    }
+    await printPromise();
+    window.print();
+    setPrintable(false);
   }
 
-  render() {
-    let page = this.state.printable ? (
-      <PrintablePage data={this.state.data} />
-    ) : (
-      <EditableView
-        onPrint={this.print}
-        data={this.state.data}
-        onAddData={this.addData}
-        handleSubmit={this.handleSubmit}
-        startingData={startingData}
-      />
-    );
-    return (
-      <div id="App">
-        <header className="App-header"></header>
-        {page}
-      </div>
-    );
-  }
+  return (
+    <div id="App">
+      <header className="App-header"></header>
+      {printable ? (
+        <PrintablePage data={data} />
+      ) : (
+        <EditableView
+          onPrint={print}
+          data={data}
+          onAddData={addData}
+          handleSubmit={handleSubmit}
+          startingData={startingData}
+        />
+      )}
+    </div>
+  );
 }
 export default App;

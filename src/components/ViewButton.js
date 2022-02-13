@@ -1,13 +1,11 @@
 import React from "react";
 
-class ViewButton extends React.Component {
-  render() {
-    return (
-      <button className={this.props.className} onClick={this.props.click}>
-        {this.props.text}
-      </button>
-    );
-  }
+function ViewButton(props) {
+  return (
+    <button className={props.className} onClick={props.click}>
+      {props.text}
+    </button>
+  );
 }
 
 export default ViewButton;

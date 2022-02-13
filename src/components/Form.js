@@ -1,178 +1,155 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Form.css";
 
-class FormInput extends React.Component {
-  render() {
+function FormInput(props) {
+  return (
+    <label key={props.field}>
+      {props.field}
+      <input
+        type="text"
+        name={props.field}
+        index={props.index}
+        value={props.value}
+        onChange={(event) =>
+          props.handleChange(event, props.section, props.index, props.field)
+        }
+      />
+    </label>
+  );
+}
+
+function FormArrayOfInputs(props) {
+  let arrayFieldSet = props.data.map((item, index) => {
     return (
-      <label key={this.props.field}>
-        {this.props.field}
+      <label key={index}>
+        {props.field}
         <input
           type="text"
-          name={this.props.field}
-          index={this.props.index}
-          value={this.props.value}
+          name={props.field}
+          key={index}
+          index={index}
+          value={item}
           onChange={(event) =>
-            this.props.handleChange(
+            props.handleChange(
               event,
-              this.props.section,
-              this.props.index,
-              this.props.field
+              props.section,
+              props.index,
+              props.field,
+              index
             )
           }
         />
       </label>
     );
-  }
-}
-
-class FormArrayOfInputs extends React.Component {
-  render() {
-    let arrayFieldSet = this.props.data.map((item, index) => {
-      return (
-        <label key={index}>
-          {this.props.field}
-          <input
-            type="text"
-            name={this.props.field}
-            key={index}
-            index={index}
-            value={item}
-            onChange={(event) =>
-              this.props.handleChange(
-                event,
-                this.props.section,
-                this.props.index,
-                this.props.field,
-                index
-              )
-            }
-          />
-        </label>
-      );
-    });
-    return (
-      <div>
-        {arrayFieldSet}
-        <button
-          onClick={() =>
-            this.props.onAddListItem(
-              this.props.section,
-              this.props.index,
-              this.props.field
-            )
-          }
-        >
-          New {this.props.field}
-        </button>
-      </div>
-    );
-  }
-}
-
-class FormFieldSet extends React.Component {
-  render() {
-    let fieldSet = Object.keys(this.props.data).map((field) => {
-      if (Array.isArray(this.props.data[field])) {
-        return (
-          <FormArrayOfInputs
-            data={this.props.data[field]}
-            field={field}
-            index={this.props.index}
-            key={field}
-            divClass="multiple-set"
-            section={this.props.section}
-            handleChange={this.props.handleChange}
-            onAddListItem={this.props.onAddListItem}
-          />
-        );
-      } else {
-        return (
-          <FormInput
-            field={field}
-            index={this.props.index}
-            value={this.props.data[field]}
-            key={field}
-            divClass="multiple-set"
-            section={this.props.section}
-            handleChange={this.props.handleChange}
-          />
-        );
-      }
-    });
-    return (
-      <div
-        key={this.props.index}
-        className={`field-set ${this.props.divClass}`}
-        index={this.props.index}
+  });
+  return (
+    <div>
+      {arrayFieldSet}
+      <button
+        onClick={() =>
+          props.onAddListItem(props.section, props.index, props.field)
+        }
       >
-        {fieldSet}
-      </div>
-    );
-  }
+        New {props.field}
+      </button>
+    </div>
+  );
 }
 
-class FormSection extends React.Component {
-  render() {
-    let fields;
-    let isList = false;
-    if (Array.isArray(this.props.data)) {
-      isList = true;
-      fields = this.props.data.map((object, index) => {
-        return (
-          <FormFieldSet
-            data={object}
-            key={index}
-            index={index}
-            divClass="multiple-set"
-            section={this.props.title}
-            handleChange={this.props.handleChange}
-            onAddListItem={this.props.onAddListItem}
-          />
-        );
-      });
+function FormFieldSet(props) {
+  let fieldSet = Object.keys(props.data).map((field) => {
+    if (Array.isArray(props.data[field])) {
+      return (
+        <FormArrayOfInputs
+          data={props.data[field]}
+          field={field}
+          index={props.index}
+          key={field}
+          divClass="multiple-set"
+          section={props.section}
+          handleChange={props.handleChange}
+          onAddListItem={props.onAddListItem}
+        />
+      );
     } else {
-      fields = (
-        <FormFieldSet
-          data={this.props.data}
-          index="null"
-          divClass="single-set"
-          section={this.props.title}
-          handleChange={this.props.handleChange}
-          onAddListItem={this.props.onAddListItem}
+      return (
+        <FormInput
+          field={field}
+          index={props.index}
+          value={props.data[field]}
+          key={field}
+          divClass="multiple-set"
+          section={props.section}
+          handleChange={props.handleChange}
         />
       );
     }
-    let addAnother = isList ? (
-      <button onClick={() => this.props.onAddData(this.props.title)}>
-        New {this.props.title}
-      </button>
-    ) : null;
-    return (
-      <div className="form-section">
-        <h2>{this.props.title}</h2>
-        <form onSubmit={this.props.handleSubmit}>
-          {fields}
-          <div className="form-buttons">
-            <input type="submit" value="Save" />
-            {addAnother}
-          </div>
-        </form>
-      </div>
-    );
-  }
+  });
+  return (
+    <div
+      key={props.index}
+      className={`field-set ${props.divClass}`}
+      index={props.index}
+    >
+      {fieldSet}
+    </div>
+  );
 }
 
-class Form extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = JSON.parse(JSON.stringify(this.props.data));
-    this.handleChange = this.handleChange.bind(this);
-    this.onAddData = this.onAddData.bind(this);
-    this.onAddListItem = this.onAddListItem.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+function FormSection(props) {
+  let fields;
+  let isList = false;
+  if (Array.isArray(props.data)) {
+    isList = true;
+    fields = props.data.map((object, index) => {
+      return (
+        <FormFieldSet
+          data={object}
+          key={index}
+          index={index}
+          divClass="multiple-set"
+          section={props.title}
+          handleChange={props.handleChange}
+          onAddListItem={props.onAddListItem}
+        />
+      );
+    });
+  } else {
+    fields = (
+      <FormFieldSet
+        data={props.data}
+        index="null"
+        divClass="single-set"
+        section={props.title}
+        handleChange={props.handleChange}
+        onAddListItem={props.onAddListItem}
+      />
+    );
   }
-  handleChange(event, section, index, name, listIndex) {
-    const newState = Object.assign({}, this.state);
+  let addAnother = isList ? (
+    <button onClick={() => props.onAddData(props.title)}>
+      New {props.title}
+    </button>
+  ) : null;
+  return (
+    <div className="form-section">
+      <h2>{props.title}</h2>
+      <form onSubmit={props.handleSubmit}>
+        {fields}
+        <div className="form-buttons">
+          <input type="submit" value="Save" />
+          {addAnother}
+        </div>
+      </form>
+    </div>
+  );
+}
+
+function Form(props) {
+  const [state, setState] = useState(JSON.parse(JSON.stringify(props.data)));
+
+  function handleChange(event, section, index, name, listIndex) {
+    const newState = Object.assign({}, state);
     if (listIndex >= 0) {
       if (index >= 0) {
         newState[section][index][name][listIndex] = event.target.value;
@@ -186,56 +163,49 @@ class Form extends React.Component {
         newState[section][name] = event.target.value;
       }
     }
-    this.setState(newState);
+    setState(newState);
   }
-  onAddData(section) {
-    const newState = Object.assign({}, this.state);
-    console.log(newState);
+  function onAddData(section) {
+    const newState = Object.assign({}, state);
     newState[section].push(
-      JSON.parse(JSON.stringify(this.props.startingData[section][0]))
+      JSON.parse(JSON.stringify(props.startingData[section][0]))
     );
-    this.setState(newState);
+    setState(newState);
   }
-  onAddListItem(section, index, name) {
-    const newState = Object.assign({}, this.state);
-    console.log(newState);
+  function onAddListItem(section, index, name) {
+    const newState = Object.assign({}, state);
     console.log(section, index, name);
     if (index >= 0) {
       newState[section][index][name].push("");
     } else {
       newState[section][name].push("");
     }
-    this.setState(newState);
+    setState(newState);
   }
-  handleSubmit(event, section) {
+  function handleSubmit(event, section) {
     event.preventDefault();
-    this.props.handleSubmit(
-      section,
-      JSON.parse(JSON.stringify(this.state[section]))
-    );
+    props.handleSubmit(section, JSON.parse(JSON.stringify(state[section])));
   }
-  render() {
-    console.log(this.state);
-    let formSections = Object.keys(this.state).map((section) => {
-      return (
-        <FormSection
-          key={section}
-          title={section}
-          data={this.state[section]}
-          onAddData={this.onAddData}
-          onAddListItem={this.onAddListItem}
-          handleSubmit={(event) => this.handleSubmit(event, section)}
-          handleChange={this.handleChange}
-        />
-      );
-    });
+
+  let formSections = Object.keys(state).map((section) => {
     return (
-      <div>
-        <h1>Im a Form</h1>
-        {formSections}
-      </div>
+      <FormSection
+        key={section}
+        title={section}
+        data={state[section]}
+        onAddData={onAddData}
+        onAddListItem={onAddListItem}
+        handleSubmit={(event) => handleSubmit(event, section)}
+        handleChange={handleChange}
+      />
     );
-  }
+  });
+  return (
+    <div>
+      <h1>Im a Form</h1>
+      {formSections}
+    </div>
+  );
 }
 
 export default Form;
