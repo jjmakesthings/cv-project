@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "./Form.css";
+import classes from "./FormView.module.css";
+
+import InformationForm from "./InformationForm";
 
 function FormInput(props) {
   return (
@@ -99,7 +101,7 @@ function FormFieldSet(props) {
 function FormSection(props) {
   let fields;
   let isList = false;
-  if (Array.isArray(props.data)) {
+  if (Array.isArray(props.data) && typeof props.data[0] === "object") {
     isList = true;
     fields = props.data.map((object, index) => {
       return (

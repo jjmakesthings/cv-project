@@ -1,0 +1,111 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400&family=Roboto:wght@100;300;400;500;700&display=swap");
+
+body {
+  margin: 0;
+}
+
+@page {
+  margin: 0;
+  padding: 0;
+}
+
+.page h1 {
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 400;
+  font-size: 3.2rem;
+  color: rgb(59, 97, 178);
+  margin: 0.2in 0 0.3in 0;
+}
+
+.page h2 {
+  font-family: "Roboto", sans-serif;
+  color: rgb(50, 50, 50);
+  margin-bottom: 0px;
+  font-weight: 400;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
+.page h3 {
+  font-family: "Calibri", sans-serif;
+  margin-top: 10px;
+  margin-bottom: 0;
+  font-size: 0.92rem;
+  font-weight: bold;
+}
+.page h4 {
+  font-family: "Calibri", sans-serif;
+  margin: 4px 0;
+  font-size: 0.92rem;
+  font-style: italic;
+  font-weight: normal;
+}
+.page p {
+  font-family: "Calibri", sans-serif;
+  font-size: 0.84rem;
+  font-weight: normal;
+  margin: 5px 0;
+}
+
+.page h1,
+.page h2,
+.page h3,
+.page h4,
+.page p {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.page ul {
+  padding-left: 25px;
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+.page ul p {
+  margin-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.page {
+  width: 8.5in;
+  height: 11in;
+  margin: auto;
+  padding: 0.26in 0.25in;
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+}
+
+.page.editable {
+  border: 1px solid grey;
+}
+
+hr.solid {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 3px solid rgb(120, 120, 120);
+  margin: 8px 0;
+  padding: 0;
+}
+
+.leftColumn {
+  flex: 2.6;
+  padding: 0.15in 0.2in;
+}
+
+.rightColumn {
+  flex: 1;
+  background-color: rgb(240, 240, 240);
+  padding: 0.15in 0.2in;
+}
+
+.info {
+  height: 77px;
+}
+.info p {
+  font-size: 0.9rem;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}

@@ -1,0 +1,10 @@
+.skill {
+  border: 2px solid rgb(120, 120, 120);
+  border-radius: 3px;
+  margin: 5px;
+  padding: 3px 3px;
+  font-family: "Calibri", sans-serif;
+  font-size: 0.82rem;
+  font-weight: normal;
+  display: inline-block;
+}
