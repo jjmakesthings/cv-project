@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import ViewButton from "./components/ViewButton";
-import Form from "./formView/FormView";
+import FormView from "./formView/FormView";
 import PrintView from "./printView/PrintView";
 
 const startingData = {
@@ -164,7 +164,7 @@ function App() {
       {preview || printView ? (
         <PrintView data={data} />
       ) : (
-        <Form data={data} handleSubmit={handleSubmit} />
+        <FormView data={data} handleSubmit={handleSubmit} />
       )}
     </div>
   );

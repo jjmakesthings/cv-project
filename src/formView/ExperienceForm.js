@@ -25,19 +25,18 @@ const InformationForm = (props) => {
       return;
     }
     const infoData = {
-      name: name.value,
-      phone: phone.value,
-      email: email.value,
+      name: name.input,
+      phone: phone.input,
+      email: email.input,
       location: location.value,
     };
-    console.log(infoData);
 
     props.onSubmit("information", infoData);
   }
 
   return (
     <Card>
-      <h2>Information</h2>
+      <h2>Experience</h2>
       <form className={classes.form} onSubmit={submitHandler}>
         <div
           className={`${classes.control} ${
@@ -62,7 +61,6 @@ const InformationForm = (props) => {
           <label htmlFor="phone">Phone</label>
           <input
             type="text"
-            required
             id="phone"
             value={phone.value}
             onChange={phone.onChange}
@@ -78,7 +76,6 @@ const InformationForm = (props) => {
           <label htmlFor="email">Email</label>
           <input
             type="text"
-            required
             id="email"
             value={email.value}
             onChange={email.onChange}
@@ -94,7 +91,6 @@ const InformationForm = (props) => {
           <label htmlFor="location">Location</label>
           <input
             type="text"
-            required
             id="location"
             value={location.value}
             onChange={location.onChange}
