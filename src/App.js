@@ -129,7 +129,7 @@ function App() {
   const [printView, setPrintView] = useState(false);
   const [data, setData] = useState(JSON.parse(JSON.stringify(startingData)));
 
-  function handleSubmit(section, sectionData) {
+  function submitHandler(section, sectionData) {
     const newData = Object.assign({}, data);
     newData[section] = sectionData;
     setData(newData);
@@ -164,7 +164,7 @@ function App() {
       {preview || printView ? (
         <PrintView data={data} />
       ) : (
-        <FormView data={data} handleSubmit={handleSubmit} />
+        <FormView data={data} submitHandler={submitHandler} />
       )}
     </div>
   );

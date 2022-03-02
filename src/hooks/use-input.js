@@ -7,16 +7,23 @@ const useInput = (initial = "", validator = () => true) => {
 
   const hasError = isTouched && !isValid ? true : false;
 
-  const onChange = (event) => {
+  const changeHandler = (event) => {
     setIsTouched(true);
     setValue(event.target.value);
   };
 
-  const onBlur = () => {
+  const blurHandler = () => {
     setIsTouched(true);
   };
 
-  return { value, hasError, isValid, isTouched, onChange, onBlur };
+  return {
+    value,
+    hasError,
+    isValid,
+    isTouched,
+    onChange: changeHandler,
+    onBlur: blurHandler,
+  };
 };
 
 export default useInput;

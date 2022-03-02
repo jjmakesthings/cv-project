@@ -1,5 +1,7 @@
 import useInput from "../hooks/use-input";
 import classes from "./FormView.module.css";
+import LabeledTextInput from "./LabeledTextInput";
+import UnlabeledTextInput from "./UnlabeledTextInput";
 
 {
   employer: "Taylor Devices, Inc.",
@@ -22,99 +24,63 @@ const ExperienceSection = (props) => {
   const start = useInput(props.data.start, isNotEmpty);
   const end = useInput(props.data.end, isNotEmpty);
   const title = useInput(props.data.title, isNotEmpty);
+  const achievments = props.data.achievments.map((achievment)=>{
+    return useInput(achievment)
+  })
+  const inputArray = [employer, location, start, end, title].concat(achievments)
 
   function submitHandler(event) {
     event.preventDefault();
-    if (
-      !employer.isValid ||
-      !location.isValid ||
-      !start.isValid ||
-      !end.isValid ||
-      !title.isValid ||
-    ) {
-      employer.isTouched = true;
-      location.isTouched = true;
-      start.isTouched = true;
-      end.isTouched = true;
-      title.isTouched = true;
+    let willReturn = false
+    inputArray.forEach((input)=>{
+      if(!input.isValid){
+        input.isTouched=true
+        willReturn = true
+      }
+    })
+    if(willReturn){
       return;
     }
-    const infoData = {
-      employer: employer.input,
-      start: start.input,
-      end: end.input,
+    const expData = {
+      employer: employer.value,
+      start: start.value,
+      end: end.value,
       city: location.value,
       title: title.value,
+      achievments: achievments.map(achievment=>achievment.value)
     };
 
-    props.onSubmit("exp", infoData);
+    props.onSubmit("exp", expData);
   }
+
+  const achievmentInputs = achievments.map((achievmentObj, index)=>{
+    return (
+      <UnlabeledTextInput key={index} obj={achievmentObj} name = {`achievment ${index}`} errorMessage="Please enter an achievment or delete" />
+    )
+  })
 
   return (
     <form className={classes.form} onSubmit={submitHandler}>
-      <div
-        className={`${classes.control} ${
-          name.hasError ? classes.invalid : ""
-        }`}
-      >
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
-          id="name"
-          value={name.value}
-          onChange={name.onChange}
-          onBlur={name.onBlur}
+        <LabeledTextInput
+          obj={name}
+          name="Name"
+          errorMessage="Please enter a name."
         />
-        {name.hasError ? <p>Please enter a name.</p> : ""}
-      </div>
-      <div
-        className={`${classes.control} ${
-          phone.hasError ? classes.invalid : ""
-        }`}
-      >
-        <label htmlFor="phone">Phone</label>
-        <input
-          type="text"
-          required
-          id="phone"
-          value={phone.value}
-          onChange={phone.onChange}
-          onBlur={phone.onBlur}
+        <LabeledTextInput
+          obj={phone}
+          name="Phone number"
+          errorMessage="Please enter a phone number."
         />
-        {phone.hasError ? <p>Please enter a phone number.</p> : ""}
-      </div>
-      <div
-        className={`${classes.control} ${
-          email.hasError ? classes.invalid : ""
-        }`}
-      >
-        <label htmlFor="email">Email</label>
-        <input
-          type="text"
-          required
-          id="email"
-          value={email.value}
-          onChange={email.onChange}
-          onBlur={email.onBlur}
+        <LabeledTextInput
+          obj={email}
+          name="Email address"
+          errorMessage="Please enter a valid email address."
         />
-        {email.hasError ? <p>Please enter a valid email address.</p> : ""}
-      </div>
-      <div
-        className={`${classes.control} ${
-          location.hasError ? classes.invalid : ""
-        }`}
-      >
-        <label htmlFor="location">Location</label>
-        <input
-          type="text"
-          required
-          id="location"
-          value={location.value}
-          onChange={location.onChange}
-          onBlur={location.onBlur}
+        <LabeledTextInput
+          obj={location}
+          name="Location"
+          errorMessage="Please enter a location."
         />
-        {location.hasError ? <p>Please enter a location.</p> : ""}
-      </div>
       <div className={classes.actions}>
         <button>Save</button>
       </div>

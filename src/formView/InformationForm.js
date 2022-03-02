@@ -1,6 +1,7 @@
 import useInput from "../hooks/use-input";
 import classes from "./FormView.module.css";
 import Card from "../ui/Card";
+import LabeledTextInput from "./LabeledTextInput";
 
 const InformationForm = (props) => {
   const isNotEmpty = (value) => value.trim() !== "";
@@ -9,19 +10,18 @@ const InformationForm = (props) => {
   const phone = useInput(props.data.phone, isNotEmpty);
   const email = useInput(props.data.email, isEmail);
   const location = useInput(props.data.location, isNotEmpty);
+  const inputArray = [name, phone, email, location];
 
   function submitHandler(event) {
     event.preventDefault();
-    if (
-      !name.isValid ||
-      !phone.isValid ||
-      !email.isValid ||
-      !location.isValid
-    ) {
-      name.isTouched = true;
-      phone.isTouched = true;
-      email.isTouched = true;
-      location.isTouched = true;
+    let willReturn = false;
+    inputArray.forEach((input) => {
+      if (!input.isValid) {
+        input.isTouched = true;
+        willReturn = true;
+      }
+    });
+    if (willReturn) {
       return;
     }
     const infoData = {
@@ -30,78 +30,34 @@ const InformationForm = (props) => {
       email: email.value,
       location: location.value,
     };
-    console.log(infoData);
-
-    props.onSubmit("information", infoData);
+    props.submitHandler(infoData);
   }
 
   return (
     <Card>
       <h2>Information</h2>
       <form className={classes.form} onSubmit={submitHandler}>
-        <div
-          className={`${classes.control} ${
-            name.hasError ? classes.invalid : ""
-          }`}
-        >
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            value={name.value}
-            onChange={name.onChange}
-            onBlur={name.onBlur}
-          />
-          {name.hasError ? <p>Please enter a name.</p> : ""}
-        </div>
-        <div
-          className={`${classes.control} ${
-            phone.hasError ? classes.invalid : ""
-          }`}
-        >
-          <label htmlFor="phone">Phone</label>
-          <input
-            type="text"
-            required
-            id="phone"
-            value={phone.value}
-            onChange={phone.onChange}
-            onBlur={phone.onBlur}
-          />
-          {phone.hasError ? <p>Please enter a phone number.</p> : ""}
-        </div>
-        <div
-          className={`${classes.control} ${
-            email.hasError ? classes.invalid : ""
-          }`}
-        >
-          <label htmlFor="email">Email</label>
-          <input
-            type="text"
-            required
-            id="email"
-            value={email.value}
-            onChange={email.onChange}
-            onBlur={email.onBlur}
-          />
-          {email.hasError ? <p>Please enter a valid email address.</p> : ""}
-        </div>
-        <div
-          className={`${classes.control} ${
-            location.hasError ? classes.invalid : ""
-          }`}
-        >
-          <label htmlFor="location">Location</label>
-          <input
-            type="text"
-            required
-            id="location"
-            value={location.value}
-            onChange={location.onChange}
-            onBlur={location.onBlur}
-          />
-          {location.hasError ? <p>Please enter a location.</p> : ""}
-        </div>
+        <LabeledTextInput
+          obj={name}
+          name="Name"
+          errorMessage="Please enter a name."
+        />
+        <LabeledTextInput
+          obj={phone}
+          name="Phone number"
+          errorMessage="Please enter a phone number."
+        />
+        <LabeledTextInput
+          obj={email}
+          name="Email address"
+          errorMessage="Please enter a valid email address."
+        />
+        <LabeledTextInput
+          obj={location}
+          name="Location"
+          errorMessage="Please enter a location."
+        />
+
         <div className={classes.actions}>
           <button>Save</button>
         </div>

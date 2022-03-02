@@ -31,7 +31,7 @@ const InformationForm = (props) => {
       location: location.value,
     };
 
-    props.onSubmit("information", infoData);
+    props.submitHandler("information", infoData);
   }
 
   return (
