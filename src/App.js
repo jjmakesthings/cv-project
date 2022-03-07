@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-import ViewButton from "./components/ViewButton";
 import FormView from "./formView/FormView";
 import PrintView from "./printView/PrintView";
+import ButtonBanner from "./buttonBanner/ButtonBanner";
 
 const startingData = {
   information: {
@@ -78,6 +78,7 @@ const startingData = {
         "Led concept, design, and test efforts for a spaceborn landing gear shock absorber. Communicated with engineers across multiple disciplines to develop specifications for the product and implement the design.",
         "Performed stress analysis on an isolator mount with geometric and material nonlinearity to establish design limits.",
         "Designer and project manager on 5 aerospace viscous damper projects.",
+        "",
       ],
     },
     {
@@ -88,6 +89,7 @@ const startingData = {
       title: "Mechanical Design Engineer",
       achievments: [
         "Designed custom hydraulic fixtures built for CNC machining cells. Often, projects included workholding automotive steering knuckles for 2-3 machining operations.",
+        "",
       ],
     },
     {
@@ -98,6 +100,7 @@ const startingData = {
       title: "Mechanical Design Engineer",
       achievments: [
         "Managed 3 product lines by facilitating design optimizations, developing assembly processes, creating assembly and inspection tools, and training assembly staff.",
+        "",
       ],
     },
   ],
@@ -129,10 +132,18 @@ function App() {
   const [printView, setPrintView] = useState(false);
   const [data, setData] = useState(JSON.parse(JSON.stringify(startingData)));
 
-  function submitHandler(section, sectionData) {
-    const newData = Object.assign({}, data);
-    newData[section] = sectionData;
-    setData(newData);
+  function submitHandler(section, sectionData, index) {
+    if (index >= 0) {
+      setData((prev) => {
+        prev[section][index] = sectionData;
+        return prev;
+      });
+    } else {
+      setData((prev) => {
+        prev[section] = sectionData;
+        return prev;
+      });
+    }
   }
 
   async function print() {
@@ -146,19 +157,21 @@ function App() {
     setPrintView(false);
   }
 
+  const toggleView = () => {
+    setPreview(!preview);
+  };
+
   return (
     <div id="App">
       <header className="App-header"></header>
       {printView ? (
         ""
       ) : (
-        <div>
-          <ViewButton
-            click={() => setPreview(!preview)}
-            text={preview ? "Form" : "Preview"}
-          />
-          <ViewButton click={print} text="Print" />
-        </div>
+        <ButtonBanner
+          print={print}
+          toggleView={toggleView}
+          isPreview={preview}
+        />
       )}
 
       {preview || printView ? (

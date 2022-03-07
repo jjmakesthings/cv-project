@@ -1,7 +1,7 @@
 function Education(props) {
-  const education = props.data.map((edu) => {
+  const education = props.data.map((edu, index) => {
     return (
-      <div>
+      <div key={index}>
         <h3>
           {`${edu.degree},`} <br /> {edu.major}{" "}
         </h3>

@@ -1,20 +1,21 @@
 import classes from "./Experience.module.css";
 
 function Achievments(props) {
-  const achievments = props.data.map((ach) => {
+  const achievments = props.data.map((ach, index) => {
     return (
-      <li>
+      <li key={index}>
         <p>{ach}</p>
       </li>
     );
   });
+  achievments.pop();
   return <ul>{achievments}</ul>;
 }
 
 function Experience(props) {
-  const experience = props.data.map((exp) => {
+  const experience = props.data.map((exp, index) => {
     return (
-      <div>
+      <div key={index}>
         <div>
           <h3 className={classes.spanHeader}>
             <span>{exp.employer}</span>

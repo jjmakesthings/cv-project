@@ -1,7 +1,7 @@
 function Training(props) {
-  const training = props.data.map((train) => {
+  const training = props.data.map((train, index) => {
     return (
-      <li>
+      <li key={index}>
         <p>{`${train.title} ${train.school ? `by ${train.school}` : ""} - ${
           train.date
         }`}</p>

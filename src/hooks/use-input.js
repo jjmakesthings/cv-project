@@ -23,6 +23,7 @@ const useInput = (initial = "", validator = () => true) => {
     isTouched,
     onChange: changeHandler,
     onBlur: blurHandler,
+    setIsTouched: setIsTouched,
   };
 };
 

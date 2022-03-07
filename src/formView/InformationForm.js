@@ -1,9 +1,11 @@
 import useInput from "../hooks/use-input";
+import { useState, useEffect, useMemo } from "react";
 import classes from "./FormView.module.css";
 import Card from "../ui/Card";
 import LabeledTextInput from "./LabeledTextInput";
 
 const InformationForm = (props) => {
+  const [isSaved, setIsSaved] = useState(true);
   const isNotEmpty = (value) => value.trim() !== "";
   const isEmail = (value) => value.includes("@");
   const name = useInput(props.data.name, isNotEmpty);
@@ -12,12 +14,22 @@ const InformationForm = (props) => {
   const location = useInput(props.data.location, isNotEmpty);
   const inputArray = [name, phone, email, location];
 
+  useEffect(() => {
+    console.log("effect");
+    inputArray.forEach((input) => {
+      if (input.isTouched) {
+        setIsSaved(false);
+      }
+      console.log(input.value, isSaved, input.isTouched);
+    });
+  }, [inputArray]);
+
   function submitHandler(event) {
     event.preventDefault();
     let willReturn = false;
     inputArray.forEach((input) => {
       if (!input.isValid) {
-        input.isTouched = true;
+        input.setIsTouched(true);
         willReturn = true;
       }
     });
@@ -31,6 +43,10 @@ const InformationForm = (props) => {
       location: location.value,
     };
     props.submitHandler(infoData);
+    inputArray.forEach((input) => {
+      input.setIsTouched(false);
+    });
+    setIsSaved(true);
   }
 
   return (
@@ -59,7 +75,7 @@ const InformationForm = (props) => {
         />
 
         <div className={classes.actions}>
-          <button>Save</button>
+          <button disabled={isSaved ? "true" : ""}>Save</button>
         </div>
       </form>
     </Card>
