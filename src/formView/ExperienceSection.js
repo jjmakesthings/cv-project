@@ -1,23 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useInput from "../hooks/use-input";
 import AchievmentsSection from "./AchievmentsSection";
 import classes from "./FormView.module.css";
 import LabeledTextInput from "./LabeledTextInput";
 
-// {
-//   employer: "Taylor Devices, Inc.",
-//   start: "Jul, 2020",
-//   end: "Present",
-//   city: "North Tonawanda, NY",
-//   title: "Project Engineer",
-//   achievments: [
-//     "Led concept, design, and test efforts for a spaceborn landing gear shock absorber. Communicated with engineers across multiple disciplines to develop specifications for the product and implement the design.",
-//     "Performed stress analysis on an isolator mount with geometric and material nonlinearity to establish design limits.",
-//     "Designer and project manager on 5 aerospace viscous damper projects.",
-//   ],
-// },
-
 const ExperienceSection = (props) => {
+  const [isSaved, setIsSaved] = useState(true);
   const isNotEmpty = (value) => value.trim() !== "";
   const employer = useInput(props.data.employer, isNotEmpty);
   const location = useInput(props.data.city, isNotEmpty);
@@ -30,9 +18,17 @@ const ExperienceSection = (props) => {
 
   const inputArray = [employer, location, start, end, title];
 
+  const isTouchedArray = inputArray.map((input) => input.isTouched);
+  useEffect(() => {
+    isTouchedArray.forEach((inputIsTouched) => {
+      if (inputIsTouched) {
+        setIsSaved(false);
+      }
+    });
+  }, [isTouchedArray]);
+
   const changeAchievmentHandler = (data, index) => {
-    console.log(index);
-    console.log(data);
+    setIsSaved(false);
     setAchievmentsState((prev) => {
       prev[index] = data;
       const next = [];
@@ -47,12 +43,13 @@ const ExperienceSection = (props) => {
       return next;
     });
   };
+
   const submitHandler = (event) => {
     event.preventDefault();
     let willReturn = false;
     inputArray.forEach((input) => {
       if (!input.isValid) {
-        input.isTouched = true;
+        input.setIsTouched(true);
         willReturn = true;
       }
     });
@@ -69,6 +66,10 @@ const ExperienceSection = (props) => {
     };
 
     props.submitHandler(expData, props.expIndex);
+    inputArray.forEach((input) => {
+      input.setIsTouched(false);
+    });
+    setIsSaved(true);
   };
 
   return (
@@ -103,7 +104,7 @@ const ExperienceSection = (props) => {
         changeHandler={changeAchievmentHandler}
       />
       <div className={classes.actions}>
-        <button>Save</button>
+        <button disabled={isSaved ? "true" : ""}>Save</button>
       </div>
     </form>
   );

@@ -21,9 +21,9 @@ const useInput = (initial = "", validator = () => true) => {
     hasError,
     isValid,
     isTouched,
+    setIsTouched,
     onChange: changeHandler,
     onBlur: blurHandler,
-    setIsTouched: setIsTouched,
   };
 };
 

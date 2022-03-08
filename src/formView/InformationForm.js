@@ -14,15 +14,14 @@ const InformationForm = (props) => {
   const location = useInput(props.data.location, isNotEmpty);
   const inputArray = [name, phone, email, location];
 
+  const isTouchedArray = inputArray.map((input) => input.isTouched);
   useEffect(() => {
-    console.log("effect");
-    inputArray.forEach((input) => {
-      if (input.isTouched) {
+    isTouchedArray.forEach((inputIsTouched) => {
+      if (inputIsTouched) {
         setIsSaved(false);
       }
-      console.log(input.value, isSaved, input.isTouched);
     });
-  }, [inputArray]);
+  }, [isTouchedArray]);
 
   function submitHandler(event) {
     event.preventDefault();
