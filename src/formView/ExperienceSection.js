@@ -27,18 +27,19 @@ const ExperienceSection = (props) => {
     });
   }, [isTouchedArray]);
 
-  const changeAchievmentHandler = (data, index) => {
+  const changeAchievmentHandler = (text, id) => {
     setIsSaved(false);
     setAchievmentsState((prev) => {
-      prev[index] = data;
-      const next = [];
-      prev.forEach((item) => {
-        if (item !== "") {
-          next.push(item);
-        }
-      });
-      if (next[next.length - 1] !== "") {
-        next.push("");
+      const next = JSON.parse(JSON.stringify(prev));
+      const index = next.map((obj) => obj.id).indexOf(id);
+      if (text === "" && next.length > 1) {
+        next.splice(index, 1);
+      } else {
+        next[index].text = text;
+      }
+      let lastItem = next[next.length - 1];
+      if (lastItem.text !== "" || !lastItem) {
+        next.push({ id: lastItem.id + 1 || 1, text: "" });
       }
       return next;
     });

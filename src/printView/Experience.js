@@ -3,8 +3,8 @@ import classes from "./Experience.module.css";
 function Achievments(props) {
   const achievments = props.data.map((ach, index) => {
     return (
-      <li key={index}>
-        <p>{ach}</p>
+      <li key={ach.id}>
+        <p>{ach.text}</p>
       </li>
     );
   });

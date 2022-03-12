@@ -84,10 +84,22 @@ const startingData = {
       city: "North Tonawanda, NY",
       title: "Project Engineer",
       achievments: [
-        "Led concept, design, and test efforts for a spaceborn landing gear shock absorber. Communicated with engineers across multiple disciplines to develop specifications for the product and implement the design.",
-        "Performed stress analysis on an isolator mount with geometric and material nonlinearity to establish design limits.",
-        "Designer and project manager on 5 aerospace viscous damper projects.",
-        "",
+        {
+          id: 1,
+          text: "Led concept, design, and test efforts for a spaceborn landing gear shock absorber. Communicated with engineers across multiple disciplines to develop specifications for the product and implement the design.",
+        },
+        {
+          id: 2,
+          text: "Performed stress analysis on an isolator mount with geometric and material nonlinearity to establish design limits.",
+        },
+        {
+          id: 3,
+          text: "Designer and project manager on 5 aerospace viscous damper projects.",
+        },
+        {
+          id: 4,
+          text: "",
+        },
       ],
     },
     {
@@ -98,8 +110,14 @@ const startingData = {
       city: "Lancaster, NY",
       title: "Mechanical Design Engineer",
       achievments: [
-        "Designed custom hydraulic fixtures built for CNC machining cells. Often, projects included workholding automotive steering knuckles for 2-3 machining operations.",
-        "",
+        {
+          id: 1,
+          text: "Designed custom hydraulic fixtures built for CNC machining cells. Often, projects included workholding automotive steering knuckles for 2-3 machining operations.",
+        },
+        {
+          id: 2,
+          text: "",
+        },
       ],
     },
     {
@@ -110,8 +128,14 @@ const startingData = {
       city: "Victor, NY",
       title: "Mechanical Design Engineer",
       achievments: [
-        "Managed 3 product lines by facilitating design optimizations, developing assembly processes, creating assembly and inspection tools, and training assembly staff.",
-        "",
+        {
+          id: 1,
+          text: "Managed 3 product lines by facilitating design optimizations, developing assembly processes, creating assembly and inspection tools, and training assembly staff.",
+        },
+        {
+          id: 2,
+          text: "",
+        },
       ],
     },
   ],
@@ -150,7 +174,7 @@ class Experience {
     this.end = "";
     this.city = "";
     this.title = "";
-    this.achievments = [""];
+    this.achievments = [{ id: 1, text: "" }];
   }
 }
 class Project {
