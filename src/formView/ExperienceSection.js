@@ -57,6 +57,7 @@ const ExperienceSection = (props) => {
       return;
     }
     const expData = {
+      id: props.data.id,
       employer: employer.value,
       start: start.value,
       end: end.value,
@@ -65,7 +66,7 @@ const ExperienceSection = (props) => {
       achievments: achievmentsState,
     };
 
-    props.submitHandler(expData, props.expIndex);
+    props.submitHandler(expData, props.data.id);
     inputArray.forEach((input) => {
       input.setIsTouched(false);
     });
@@ -104,7 +105,10 @@ const ExperienceSection = (props) => {
         changeHandler={changeAchievmentHandler}
       />
       <div className={classes.actions}>
-        <button disabled={isSaved ? "true" : ""}>Save</button>
+        <button onClick={(event) => props.deleteHandler(event, props.data.id)}>
+          Delete
+        </button>
+        <button disabled={isSaved ? "t" : ""}>Save</button>
       </div>
     </form>
   );

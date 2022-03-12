@@ -6,6 +6,7 @@ import ButtonBanner from "./buttonBanner/ButtonBanner";
 
 const startingData = {
   information: {
+    id: 1,
     name: "John J. Shepard",
     phone: "(716)697-8327",
     email: "jjshepard.engr@gmail.com",
@@ -13,6 +14,7 @@ const startingData = {
   },
   education: [
     {
+      id: 1,
       degree: "Bachelor of Science",
       major: "Mechanical Engineering Technology",
       school: "Rochester Institute of Technology",
@@ -22,31 +24,37 @@ const startingData = {
   ],
   training: [
     {
+      id: 1,
       title: "React - The Complete Guide",
       school: "Academind",
       date: "2022",
     },
     {
+      id: 2,
       title: "The Odin Project",
       school: "",
       date: "2022",
     },
     {
+      id: 3,
       title: "Javascript Algorithms and Data Structures",
       school: "Colt Steele",
       date: "2022",
     },
     {
+      id: 4,
       title: "Clean Code",
       school: "Academind",
       date: "2021",
     },
     {
+      id: 5,
       title: "Python Django - The Practical Guide",
       school: "Academind",
       date: "2021",
     },
     {
+      id: 6,
       title: "Automate the Boring Stuff",
       school: "Al Sweigart",
       date: "2021",
@@ -69,6 +77,7 @@ const startingData = {
   ],
   experience: [
     {
+      id: 1,
       employer: "Taylor Devices, Inc.",
       start: "Jul, 2020",
       end: "Present",
@@ -82,6 +91,7 @@ const startingData = {
       ],
     },
     {
+      id: 2,
       employer: "PRZ Technologies, Inc.",
       start: "Jun, 2016",
       end: "Jul, 2020",
@@ -93,6 +103,7 @@ const startingData = {
       ],
     },
     {
+      id: 3,
       employer: "New Scale Technologies, Inc.",
       start: "Nov, 2012",
       end: "Jun, 2016",
@@ -106,18 +117,21 @@ const startingData = {
   ],
   projects: [
     {
+      id: 1,
       title: "Playoff Pool Web Application",
       subtitle: "playoffpoolparty.com",
       summary:
         "Using Python and the Django framework, designed and built a website for hosting playoff confidence pools. The app allows users to create private leagues, invite friends, customize their league page, chat with members, and submit team rankings. Through a combination of API calls and web scraping, game data is displayed and scores are calculated for each user's entry. The app also features user authentication, email support for password reset, and storage for user uploaded logos.",
     },
     {
+      id: 2,
       title: "Spring-Damper Physics Simulator",
       subtitle: "Taylor Devices, Inc.",
       summary:
         "Built a desktop application using Python and a Tkinter GUI to simulate the motion of a spring-damper system. Designed a solver based on a numerical method alongside an algorithm to optimize time-step size based on system acceleration. The program displays results using Matplotlib and allows data to be exported as a csv. Functionality is also built in to allow inputs to be serialized to create a save file.",
     },
     {
+      id: 3,
       title: "Bridge Damper Design and Categorization Script",
       subtitle: "Taylor Devices, Inc.",
       summary:
@@ -127,23 +141,87 @@ const startingData = {
   hobbies: ["CNC Woodwork", "Tabletop Gaming", "Voleyball"],
 };
 
+class Experience {
+  constructor(dataLocation) {
+    this.id =
+      dataLocation["experience"][dataLocation["experience"].length - 1].id + 1;
+    this.employer = "";
+    this.start = "";
+    this.end = "";
+    this.city = "";
+    this.title = "";
+    this.achievments = [""];
+  }
+}
+class Project {
+  constructor(dataLocation) {
+    this.id =
+      dataLocation["projects"][dataLocation["projects"].length - 1].id + 1;
+    this.title = "";
+    this.subtitle = "";
+    this.summary = "";
+  }
+}
+class Education {
+  constructor(dataLocation) {
+    this.id =
+      dataLocation["education"][dataLocation["education"].length - 1].id + 1;
+    this.degree = "";
+    this.major = "";
+    this.school = "";
+    this.city = "";
+    this.date = "";
+  }
+}
+
 function App() {
   const [preview, setPreview] = useState(false);
   const [printView, setPrintView] = useState(false);
   const [data, setData] = useState(JSON.parse(JSON.stringify(startingData)));
 
-  function submitHandler(section, sectionData, index) {
-    if (index >= 0) {
+  function submitHandler(section, sectionData, id) {
+    if (section === "information") {
       setData((prev) => {
-        prev[section][index] = sectionData;
-        return prev;
+        const next = JSON.parse(JSON.stringify(prev));
+        next[section] = sectionData;
+        return next;
       });
     } else {
       setData((prev) => {
-        prev[section] = sectionData;
-        return prev;
+        const next = JSON.parse(JSON.stringify(prev));
+        const index = next[section].map((obj) => obj.id).indexOf(id);
+        next[section][index] = sectionData;
+        return next;
       });
     }
+  }
+  function deleteHandler(section, id) {
+    setData((prev) => {
+      const next = JSON.parse(JSON.stringify(prev));
+      const index = next[section].map((obj) => obj.id).indexOf(id);
+      next[section].splice(index, 1);
+      return next;
+    });
+  }
+  function addHandler(section) {
+    setData((prev) => {
+      const next = JSON.parse(JSON.stringify(prev));
+      switch (section) {
+        case "experience":
+          next[section].push(new Experience(data));
+          break;
+        case "projects":
+          next[section].push(new Project(data));
+          break;
+        case "education":
+          next[section].push(new Education(data));
+          break;
+        default:
+          break;
+      }
+      console.log(next);
+      return next;
+    });
   }
 
   async function print() {
@@ -177,7 +255,12 @@ function App() {
       {preview || printView ? (
         <PrintView data={data} />
       ) : (
-        <FormView data={data} submitHandler={submitHandler} />
+        <FormView
+          data={data}
+          submitHandler={submitHandler}
+          deleteHandler={deleteHandler}
+          addHandler={addHandler}
+        />
       )}
     </div>
   );

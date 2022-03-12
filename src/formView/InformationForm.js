@@ -1,5 +1,5 @@
 import useInput from "../hooks/use-input";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import classes from "./FormView.module.css";
 import Card from "../ui/Card";
 import LabeledTextInput from "./LabeledTextInput";
@@ -74,7 +74,7 @@ const InformationForm = (props) => {
         />
 
         <div className={classes.actions}>
-          <button disabled={isSaved ? "true" : ""}>Save</button>
+          <button disabled={isSaved ? "t" : ""}>Save</button>
         </div>
       </form>
     </Card>

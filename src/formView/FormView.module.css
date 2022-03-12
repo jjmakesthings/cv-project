@@ -51,6 +51,32 @@
   cursor: auto;
 }
 
+.add {
+  margin-top: 1rem;
+  padding: 16px;
+  text-align: center;
+}
+
+.add button {
+  font: inherit;
+  font-size: 24px;
+  cursor: pointer;
+  background-color: whitesmoke;
+  color: #77002e;
+  padding: 0.5rem 1.5rem;
+  border: 2px solid #77002e;
+  border-radius: 6px;
+  font-weight: bold;
+  width: 100%;
+}
+
+.add button:hover,
+.add button:active {
+  background-color: #a50e48;
+  border-color: #a50e48;
+  color: white;
+}
+
 .invalid input {
   background-color: rgb(255, 189, 189);
   border-color: #a50e48;

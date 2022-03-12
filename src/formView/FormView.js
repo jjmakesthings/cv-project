@@ -1,18 +1,32 @@
-import { useState } from "react";
 import ExperienceForm from "./ExperienceForm";
 import InformationForm from "./InformationForm";
+import ProjectsForm from "./ProjectsForm";
 
 const FormView = (props) => {
-  //  const [state, setState] = useState(JSON.parse(JSON.stringify(props.data)));
-
   const infoSubmitHandler = (data) => {
-    console.log(data);
     props.submitHandler("information", data);
   };
 
-  const expSubmitHandler = (data, index) => {
-    console.log(data);
-    props.submitHandler("experience", data, index);
+  const expSubmitHandler = (data, id) => {
+    props.submitHandler("experience", data, id);
+  };
+  const expDeleteHandler = (event, id) => {
+    event.preventDefault();
+    props.deleteHandler("experience", id);
+  };
+  const expAddHandler = () => {
+    props.addHandler("experience");
+  };
+
+  const projSubmitHandler = (data, id) => {
+    props.submitHandler("projects", data, id);
+  };
+  const projDeleteHandler = (event, id) => {
+    event.preventDefault();
+    props.deleteHandler("projects", id);
+  };
+  const projAddHandler = () => {
+    props.addHandler("projects");
   };
 
   return (
@@ -25,6 +39,14 @@ const FormView = (props) => {
       <ExperienceForm
         data={props.data.experience}
         submitHandler={expSubmitHandler}
+        deleteHandler={expDeleteHandler}
+        addHandler={expAddHandler}
+      />
+      <ProjectsForm
+        data={props.data.projects}
+        submitHandler={projSubmitHandler}
+        deleteHandler={projDeleteHandler}
+        addHandler={projAddHandler}
       />
     </div>
   );
