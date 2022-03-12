@@ -1,6 +1,7 @@
 import ExperienceForm from "./ExperienceForm";
 import InformationForm from "./InformationForm";
 import ProjectsForm from "./ProjectsForm";
+import EducationForm from "./EducationForm";
 
 const FormView = (props) => {
   const infoSubmitHandler = (data) => {
@@ -29,6 +30,17 @@ const FormView = (props) => {
     props.addHandler("projects");
   };
 
+  const eduSubmitHandler = (data, id) => {
+    props.submitHandler("education", data, id);
+  };
+  const eduDeleteHandler = (event, id) => {
+    event.preventDefault();
+    props.deleteHandler("education", id);
+  };
+  const eduAddHandler = () => {
+    props.addHandler("education");
+  };
+
   return (
     <div>
       <h1>Im a Form</h1>
@@ -47,6 +59,12 @@ const FormView = (props) => {
         submitHandler={projSubmitHandler}
         deleteHandler={projDeleteHandler}
         addHandler={projAddHandler}
+      />
+      <EducationForm
+        data={props.data.education}
+        submitHandler={eduSubmitHandler}
+        deleteHandler={eduDeleteHandler}
+        addHandler={eduAddHandler}
       />
     </div>
   );
