@@ -196,6 +196,14 @@ function App() {
     }
   }
   function deleteHandler(section, id) {
+    let confirm = window.confirm(
+      `Are you sure you would like to delete from ${section}?`
+    )
+      ? true
+      : false;
+    if (!confirm) {
+      return;
+    }
     setData((prev) => {
       const next = JSON.parse(JSON.stringify(prev));
       const index = next[section].map((obj) => obj.id).indexOf(id);
