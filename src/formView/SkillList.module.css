@@ -1,6 +1,6 @@
 .skill {
   border: 2px solid rgb(120, 120, 120);
-  border-radius: 3px;
+  border-radius: 6px;
   margin: 5px;
   display: inline-block;
 }
@@ -21,9 +21,12 @@
   color: grey;
   height: 100%;
   font-weight: bold;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 .skill button:hover,
 .skill button:active {
   color: #77002e;
+  background-color: #e6dcdf;
 }

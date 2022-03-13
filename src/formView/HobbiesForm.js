@@ -24,8 +24,7 @@ const HobbiesForm = (props) => {
   }
 
   return (
-    <Card>
-      <h2>Hobbies</h2>
+    <Card title="Hobbies">
       <form className={classes.form} onSubmit={submitHandler}>
         <LabeledTextInput
           obj={text}

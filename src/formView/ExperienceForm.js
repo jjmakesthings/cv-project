@@ -15,8 +15,7 @@ const ExperienceForm = (props) => {
   });
 
   return (
-    <Card>
-      <h2>Experience</h2>
+    <Card title="Experience">
       {sections}
       <div className={classes.add}>
         <button onClick={props.addHandler}>Add Experience</button>

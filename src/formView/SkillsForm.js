@@ -24,8 +24,7 @@ const SkillsForm = (props) => {
   }
 
   return (
-    <Card>
-      <h2>Skills</h2>
+    <Card title="Skills">
       <form className={classes.form} onSubmit={submitHandler}>
         <LabeledTextInput
           obj={text}

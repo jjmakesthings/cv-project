@@ -49,8 +49,7 @@ const InformationForm = (props) => {
   }
 
   return (
-    <Card>
-      <h2>Information</h2>
+    <Card title="Information">
       <form className={classes.form} onSubmit={submitHandler}>
         <LabeledTextInput
           obj={name}

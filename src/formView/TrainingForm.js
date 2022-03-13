@@ -15,8 +15,7 @@ const TrainingForm = (props) => {
   });
 
   return (
-    <Card>
-      <h2>Training</h2>
+    <Card title="Training">
       {sections}
       <div className={classes.add}>
         <button onClick={props.addHandler}>Add Training</button>

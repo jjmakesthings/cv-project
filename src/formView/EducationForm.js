@@ -15,8 +15,7 @@ const EducationForm = (props) => {
   });
 
   return (
-    <Card>
-      <h2>Education</h2>
+    <Card title="Education">
       {sections}
       <div className={classes.add}>
         <button onClick={props.addHandler}>Add Education</button>
