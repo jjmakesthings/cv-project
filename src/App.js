@@ -220,7 +220,10 @@ const startingData = {
 class Experience {
   constructor(dataLocation) {
     this.id =
-      dataLocation["experience"][dataLocation["experience"].length - 1].id + 1;
+      dataLocation["experience"].length > 0
+        ? dataLocation["experience"][dataLocation["experience"].length - 1].id +
+          1
+        : 1;
     this.employer = "";
     this.start = "";
     this.end = "";
@@ -232,7 +235,9 @@ class Experience {
 class Project {
   constructor(dataLocation) {
     this.id =
-      dataLocation["projects"][dataLocation["projects"].length - 1].id + 1;
+      dataLocation["projects"].length > 0
+        ? dataLocation["projects"][dataLocation["projects"].length - 1].id + 1
+        : 1;
     this.title = "";
     this.subtitle = "";
     this.summary = "";
@@ -241,7 +246,9 @@ class Project {
 class Education {
   constructor(dataLocation) {
     this.id =
-      dataLocation["education"][dataLocation["education"].length - 1].id + 1;
+      dataLocation["education"].length > 0
+        ? dataLocation["education"][dataLocation["education"].length - 1].id + 1
+        : 1;
     this.degree = "";
     this.major = "";
     this.school = "";
@@ -251,7 +258,10 @@ class Education {
 }
 class Skill {
   constructor(dataLocation, section, sectionText) {
-    this.id = dataLocation[section][dataLocation[section].length - 1].id + 1;
+    this.id =
+      dataLocation[section].length > 0
+        ? dataLocation[section][dataLocation[section].length - 1].id + 1
+        : 1;
     this.text = sectionText;
   }
 }
