@@ -61,19 +61,58 @@ const startingData = {
     },
   ],
   skills: [
-    "JavaScript",
-    "Python",
-    "HTML",
-    "CSS",
-    "Node.js",
-    "React",
-    "Django",
-    "Tkinter",
-    "Git",
-    "VS Code",
-    "PostgreSQL",
-    "Webpack",
-    "Pandas",
+    {
+      id: 1,
+      text: "JavaScript",
+    },
+    {
+      id: 2,
+      text: "Python",
+    },
+    {
+      id: 3,
+      text: "HTML",
+    },
+    {
+      id: 4,
+      text: "CSS",
+    },
+    {
+      id: 5,
+      text: "Node.js",
+    },
+    {
+      id: 6,
+      text: "React",
+    },
+    {
+      id: 7,
+      text: "Django",
+    },
+    {
+      id: 8,
+      text: "Tkinter",
+    },
+    {
+      id: 9,
+      text: "Git",
+    },
+    {
+      id: 10,
+      text: "VS Code",
+    },
+    {
+      id: 11,
+      text: "PostgreSQL",
+    },
+    {
+      id: 12,
+      text: "Webpack",
+    },
+    {
+      id: 13,
+      text: "Pandas",
+    },
   ],
   experience: [
     {
@@ -162,7 +201,20 @@ const startingData = {
         "Wrote a script used to design and sort bridge cable dampers for a project that required 432 dampers with unique specifications. This tool simplified the design process to allow experimentation of grouping thresholds to create the smallest number of unique designs while minimizing overengineering.",
     },
   ],
-  hobbies: ["CNC Woodwork", "Tabletop Gaming", "Voleyball"],
+  hobbies: [
+    {
+      id: 1,
+      text: "CNC Woodwork",
+    },
+    {
+      id: 2,
+      text: "Tabletop Gaming",
+    },
+    {
+      id: 3,
+      text: "Volleyball",
+    },
+  ],
 };
 
 class Experience {
@@ -197,6 +249,12 @@ class Education {
     this.date = "";
   }
 }
+class Skill {
+  constructor(dataLocation, section, sectionText) {
+    this.id = dataLocation[section][dataLocation[section].length - 1].id + 1;
+    this.text = sectionText;
+  }
+}
 
 function App() {
   const [preview, setPreview] = useState(false);
@@ -208,6 +266,12 @@ function App() {
       setData((prev) => {
         const next = JSON.parse(JSON.stringify(prev));
         next[section] = sectionData;
+        return next;
+      });
+    } else if (section === "skills" || section === "hobbies") {
+      setData((prev) => {
+        const next = JSON.parse(JSON.stringify(prev));
+        next[section].push(new Skill(data, section, sectionData));
         return next;
       });
     } else {

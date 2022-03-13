@@ -3,6 +3,8 @@ import InformationForm from "./InformationForm";
 import ProjectsForm from "./ProjectsForm";
 import EducationForm from "./EducationForm";
 import TrainingForm from "./TrainingForm";
+import SkillsForm from "./SkillsForm";
+import HobbiesForm from "./HobbiesForm";
 
 const FormView = (props) => {
   const infoSubmitHandler = (data) => {
@@ -52,6 +54,22 @@ const FormView = (props) => {
   const trainAddHandler = () => {
     props.addHandler("training");
   };
+
+  const skillSubmitHandler = (data) => {
+    props.submitHandler("skills", data);
+  };
+  const skillDeleteHandler = (event, id) => {
+    event.preventDefault();
+    props.deleteHandler("skills", id);
+  };
+
+  const hobbySubmitHandler = (data) => {
+    props.submitHandler("hobbies", data);
+  };
+  const hobbyDeleteHandler = (event, id) => {
+    event.preventDefault();
+    props.deleteHandler("hobbies", id);
+  };
   return (
     <div>
       <InformationForm
@@ -81,6 +99,16 @@ const FormView = (props) => {
         submitHandler={trainSubmitHandler}
         deleteHandler={trainDeleteHandler}
         addHandler={trainAddHandler}
+      />
+      <SkillsForm
+        data={props.data.skills}
+        submitHandler={skillSubmitHandler}
+        deleteHandler={skillDeleteHandler}
+      />
+      <HobbiesForm
+        data={props.data.hobbies}
+        submitHandler={hobbySubmitHandler}
+        deleteHandler={hobbyDeleteHandler}
       />
     </div>
   );

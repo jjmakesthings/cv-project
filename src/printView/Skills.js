@@ -3,8 +3,8 @@ import classes from "./Skills.module.css";
 function Skills(props) {
   const skills = props.data.map((skill, index) => {
     return (
-      <span key={index} className={classes.skill}>
-        {skill}
+      <span key={skill.id} className={classes.skill}>
+        {skill.text}
       </span>
     );
   });
