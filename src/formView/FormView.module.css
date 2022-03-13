@@ -87,3 +87,8 @@
 .invalid p {
   color: #77002e;
 }
+
+.footer {
+  margin: 40px auto;
+  text-align: center;
+}

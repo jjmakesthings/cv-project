@@ -5,6 +5,7 @@ import EducationForm from "./EducationForm";
 import TrainingForm from "./TrainingForm";
 import SkillsForm from "./SkillsForm";
 import HobbiesForm from "./HobbiesForm";
+import classes from "./FormView.module.css";
 
 const FormView = (props) => {
   const infoSubmitHandler = (data) => {
@@ -110,6 +111,7 @@ const FormView = (props) => {
         submitHandler={hobbySubmitHandler}
         deleteHandler={hobbyDeleteHandler}
       />
+      <div className={classes.footer}>Copyright © 2022 John Shepard</div>
     </div>
   );
 };
