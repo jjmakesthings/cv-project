@@ -16,7 +16,7 @@ const AchievmentsSection = (props) => {
   });
   return (
     <div className={classes.control}>
-      <h4>Achievments</h4>
+      <h4>Achievements</h4>
       <ol>{achievmentArray}</ol>
     </div>
   );

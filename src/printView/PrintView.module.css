@@ -12,7 +12,7 @@ body {
 .page h1 {
   font-family: "Josefin Sans", sans-serif;
   font-weight: 400;
-  font-size: 3.2rem;
+  font-size: 51px;
   color: rgb(59, 97, 178);
   margin: 0.2in 0 0.3in 0;
 }
@@ -22,7 +22,7 @@ body {
   color: rgb(50, 50, 50);
   margin-bottom: 0px;
   font-weight: 400;
-  font-size: 1.2rem;
+  font-size: 19px;
   text-transform: uppercase;
 }
 
@@ -30,19 +30,19 @@ body {
   font-family: "Calibri", sans-serif;
   margin-top: 10px;
   margin-bottom: 0;
-  font-size: 0.92rem;
+  font-size: 14.5px;
   font-weight: bold;
 }
 .page h4 {
   font-family: "Calibri", sans-serif;
   margin: 4px 0;
-  font-size: 0.92rem;
+  font-size: 14.5px;
   font-style: italic;
   font-weight: normal;
 }
 .page p {
   font-family: "Calibri", sans-serif;
-  font-size: 0.84rem;
+  font-size: 13.5px;
   font-weight: normal;
   margin: 5px 0;
 }
@@ -105,7 +105,7 @@ hr.solid {
   height: 77px;
 }
 .info p {
-  font-size: 0.9rem;
+  font-size: 14.5px;
   margin-top: 8px;
   margin-bottom: 8px;
 }
